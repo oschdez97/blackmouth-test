@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS player;
+DROP TABLE IF EXISTS queue;
+DROP TABLE IF EXISTS gamesession;
+DROP TABLE IF EXISTS gamesession_players;

@@ -1,0 +1,504 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "A game management service API in Go using Gin framework.",
+        "title": "Blackmouth Test Service",
+        "contact": {
+            "name": "Oscar Hernandez",
+            "email": "oschdez97@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/gamesession": {
+            "get": {
+                "description": "Responds with the list of all gamesessions as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gamesessions"
+                ],
+                "summary": "Get gamesession array",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Player"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Takes a player ID and a queue ID JSON and determines if there is an open session for that queue, in which case it joins it, otherwise a new session is created.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gamesessions"
+                ],
+                "summary": "Take a player and join him in a game session",
+                "parameters": [
+                    {
+                        "description": "PostGameSession JSON",
+                        "name": "joindata",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PostGameSession"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.GameSession"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gamesession/{status}": {
+            "get": {
+                "description": "Responds with the list of gamesessions with the given status as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gamesessions"
+                ],
+                "summary": "Get gamesession by status",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "GameSession status",
+                        "name": "status",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Player"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/player": {
+            "get": {
+                "description": "Responds with the list of all players as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "Get players array",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Player"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Takes a player JSON and store in DB.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "Store a new player",
+                "parameters": [
+                    {
+                        "description": "Player JSON",
+                        "name": "player",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PostPlayer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Player"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/player/{id}": {
+            "get": {
+                "description": "Responds with the player with the given id as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "Get player by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Player id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Player"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing player in DB.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "Update a player",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Player id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Player JSON",
+                        "name": "player",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PostPlayer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Player"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an existing player in DB.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "Delete a player",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Player id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
+        "/queue": {
+            "get": {
+                "description": "Responds with the list of all queues as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queues"
+                ],
+                "summary": "Get queues array",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Queue"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Takes a queue JSON and store in DB.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queues"
+                ],
+                "summary": "Store a new queue",
+                "parameters": [
+                    {
+                        "description": "Queue JSON",
+                        "name": "queue",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PostQueue"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Queue"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/queue/{id}": {
+            "get": {
+                "description": "Responds with the queue with the given id as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queues"
+                ],
+                "summary": "Get queue by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Queue id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Queue"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing queue in DB.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queues"
+                ],
+                "summary": "Update a queue",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Queue id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Queue JSON",
+                        "name": "queue",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PutQueue"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Queue"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an existing queue in DB.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queues"
+                ],
+                "summary": "Delete a queue",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Queue id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.GameSession": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "player_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Player"
+                    }
+                },
+                "queue_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.Player": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.PostGameSession": {
+            "type": "object",
+            "properties": {
+                "player_id": {
+                    "type": "integer"
+                },
+                "queue_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.PostPlayer": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.PostQueue": {
+            "type": "object",
+            "required": [
+                "capacity",
+                "name"
+            ],
+            "properties": {
+                "capacity": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.PutQueue": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Queue": {
+            "type": "object",
+            "properties": {
+                "capacity": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
